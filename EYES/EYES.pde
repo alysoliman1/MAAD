@@ -5,22 +5,38 @@ import processing.sound.*;
 
 Tablet tablet;
 
-animation [] eyes = new animation [30];
+animation [] eyes = new animation [20];
+
+boolean [] register_points_1 = new boolean[20];
+
+boolean [] register_points_2 = new boolean[20];
+
+float[] scales = new float[20];
+
+float[][] point_1 = new float[20][2];
+
+float[][] point_2 = new float[20][2];
+
+int index = 0;
 
 float pen_pressure, pre_pen_pressure, pressure_delta = 0;
 
 boolean pen_on_tablet = false;
 
-boolean register_point_1, register_point_2 = false;
-float scale;
-int [] point_1 = new int[2];
-int [] point_2 = new int[2];
+int buffer = 0;
+
+int [] mouse_tracking_frames = {4,9,10,11,12,13};
 
 void setup(){
 
   size(600, 600);
   
-  for (int i = 0; i < eyes.length; i ++ ) eyes[i] = new animation("eye_animation");
+  for (int i = 0; i < eyes.length; i ++ ) { 
+    
+    eyes[i] = new animation("eye_animation");
+    eyes[i].set_mouse_tracking(mouse_tracking_frames);
+    
+  }
   
   tablet = new Tablet(this); 
   
@@ -29,57 +45,70 @@ void setup(){
 
 void draw (){
   
-  background(255);
+  background(255*pen_pressure,255,255);
  
- pen_pressure = tablet.getPressure(); // update pen pressure input
+  pen_pressure = tablet.getPressure(); // update pen pressure input
  
- pen_on_tablet = pen_pressure>0.2;
- 
-
+  pen_on_tablet = pen_pressure>0.2;
   
-    if ( pen_on_tablet ) {
+  if ( register_points_1 [index] == true && register_points_2 [index] == true && index < 19){
+    buffer += 1 ; 
+    
+    if (buffer == 10){
+    index +=1;
+    buffer =0;
+    }
+  }
+  
+  
+ 
+  if ( pen_on_tablet ) {
       
       stroke(0);
       
       strokeWeight(2);
       
-      if (register_point_1==false){
+      if ( register_points_1 [index] == false ){
         
-        register_point_1=true;
+        register_points_1 [index] = true;
         
-        point_1[0] = mouseX;
+        point_1[index][0] = mouseX;
         
-        point_1[1] = mouseY;
+        point_1[index][1] = mouseY;
+        
+         println("p1");
         
       }
       
       line (mouseX,mouseY,pmouseX,pmouseY);
       
-      noStroke();
-       
     } 
     
     else {
       
-     if (register_point_1 == true && register_point_2 == false){
+     if ( register_points_1 [index] == true && register_points_2[index] == false){
        
-        point_2[0] = mouseX;
+        point_2[index][0] = mouseX;
         
-        point_2[1] = mouseY;
+        point_2[index][1] = mouseY;
         
-        scale = float(abs(point_2[0]-point_1[0])) / float(eyes[0].frames[0].width);
-      
-        eyes[0].rescale(scale);
+        scales [index] = (float)abs(  point_2[index][0] - point_1[index][0] ) / float(eyes[index].frames[0].width);
  
-       register_point_2 = true;
+       register_points_2 [index] = true;
+       
        }
       
     }
-    if (register_point_1 && register_point_2 ){
+    
+     
+    
+    for (int i =0; i <= index ; i ++){
+      println(i);
+    if (register_points_1 [i] && register_points_2 [i]){
       
-      eyes[0].display(point_1[0]/2+point_2[0]/2, point_1[1]/2+point_2[1]/2);
-      eyes[0].animate(1,8);
-      
+      eyes[i].display(point_1[i][0]/2+point_2[i][0]/2, point_1[i][1]/2+point_2[i][1]/2,ceil(eyes[i].frames[0].width*scales[i]),ceil(eyes[i].frames[0].height*scales[i]));
+     eyes[i].animate(1,8);
+    }
     }
    
 }
