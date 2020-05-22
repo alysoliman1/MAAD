@@ -1,3 +1,3 @@
 # MAAD
-MAAD Project
+MAAD Project \\
 This is a collection of interactive drawing programs.
