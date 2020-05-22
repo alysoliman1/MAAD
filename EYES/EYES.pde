@@ -49,7 +49,7 @@ void draw (){
  
   pen_pressure = tablet.getPressure(); // update pen pressure input
  
-  pen_on_tablet = pen_pressure>0.2;
+  pen_on_tablet = pen_pressure>0.2 || mousePressed;
   
   if ( register_points_1 [index] == true && register_points_2 [index] == true && index < 19){
     buffer += 1 ; 
