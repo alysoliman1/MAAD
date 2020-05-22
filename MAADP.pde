@@ -71,7 +71,6 @@ void draw (){
     
     stroke_color = color(255*(1-pen_pressure),255,2);
     
-    
     //draw points and update their radius 
     
     point ( mouseX, mouseY, 20 * pen_pressure + 10 , point_color_1 , stroke_color );
