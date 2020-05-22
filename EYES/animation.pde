@@ -51,17 +51,17 @@ if(  mouse_tracking == false){
   current_frame += 0.1; 
 } else {
   
-      if (mouseX > this.x+this.w*2/3 && mouseY < this.y+this.h/2  ) current_frame = mouse_track_frames[1];
+      if (mouseX > this.x+this.w*1/6 && mouseY < this.y  ) current_frame = mouse_track_frames[1];
      
-      if (mouseX < this.x+this.w/3 && mouseY < this.y+this.h/2 )  current_frame = mouse_track_frames[2];
+      if (mouseX < this.x-this.w/6 && mouseY < this.y)  current_frame = mouse_track_frames[2];
       
-      if (mouseX > this.x+this.w*2/3 && mouseY > this.y+this.h/2  )  current_frame = mouse_track_frames[5];
+      if (mouseX > this.x+this.w*1/6 && mouseY > this.y )  current_frame = mouse_track_frames[5];
       
-      if (mouseX < this.x+this.w/3 && mouseY > this.y+this.h/2 )  current_frame = mouse_track_frames[4];
+      if (mouseX < this.x-this.w/6 && mouseY > this.y)  current_frame = mouse_track_frames[4];
       
-      if (mouseX > this.x+this.w/3 && mouseX < this.x+this.w*2/3 && mouseY < this.y+this.h/2 )  current_frame = mouse_track_frames[0];
+      if (mouseX > this.x-this.w/6 && mouseX < this.x+this.w*1/6 && mouseY < this.y)  current_frame = mouse_track_frames[0];
       
-      if (mouseX > this.x+this.w/3 && mouseX < this.x+this.w*2/3 && mouseY > this.y+this.h/2 )  current_frame = mouse_track_frames[3];
+      if (mouseX > this.x-this.w/6 && mouseX < this.x+this.w*1/6 && mouseY > this.y) current_frame = mouse_track_frames[3];
        
 }
 }
